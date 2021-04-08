@@ -1,3 +1,13 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  apipe
+
+  root controller: 'static', action: '/'
+
+  mount GrapeSwaggerRails::Engine => '/swagger' if Rails.env.staging? || Rails.env.development?
+
+  namespace 'api' do
+    namespace 'v1', defaults: { format: 'json' } do
+      post 'auth/signup', to 'authentication#signup'
+    end
+  end
 end
