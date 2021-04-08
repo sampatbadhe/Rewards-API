@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  apipe
+  apipie
 
   root controller: 'static', action: '/'
 
@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace 'v1', defaults: { format: 'json' } do
-      post 'auth/signup', to 'authentication#signup'
+      post 'auth/signup', to: 'authentication#signup'
     end
   end
 end
