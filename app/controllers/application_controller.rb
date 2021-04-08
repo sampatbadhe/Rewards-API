@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::Helpers
+  include TokenValidatable
 
   helper_method :current_user
 
