@@ -4,8 +4,8 @@
 class Token
   attr_reader :jwt_config
 
-  def initialize
-    @jwt_config = options[:jwt_config] || Rails.application.secrets.jwt
+  def initialize(options={})
+    @jwt_config = options[:jwt_config] || Rails.application.credentials.jwt
     @bearer = options[:bearer] || ''
   end
 

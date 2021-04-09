@@ -1,9 +1,19 @@
 module ApiErrors
   class BaseError < StandardError
+    attr_accessor :status
+
     def initialize(message, status: :unprocessable_entity)
       message = message.join('. ') if message.is_a? Array
       super(message)
       @status = status
+    end
+
+    def type
+      self.class.name.split(':').last
+    end
+
+    def as_json
+      { error: message, type: type, status: status }
     end
   end
 
@@ -25,5 +35,9 @@ module ApiErrors
     end
   end
 
+  module_function :define_error_klass
+
   UnauthorizedError = define_error_klass(AccessError, 'errors.unauthorized')
+  NotFoundError = define_error_klass(BaseError, 'errors.not_found', status: 404)
+  InvalidParamsError = define_error_klass(BaseError, 'errors.invalid_params', status: 422)
 end
