@@ -46,7 +46,7 @@ module Api
       end
 
       def tokenize(user)
-        Token.new.generate_token(id: user.id)
+        Token.new.generate_token(user_id: user.id)
       end
     end
   end

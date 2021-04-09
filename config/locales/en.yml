@@ -6,3 +6,6 @@ en:
     duplicate_error: A record already exists
     invalid_params: Invalid or missing params
     unauthorized: You are not authorized to take this action.
+  token:
+    invalid: Invalid token
+    expired: Expired token
