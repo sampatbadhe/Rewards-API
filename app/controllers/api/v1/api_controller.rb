@@ -15,6 +15,7 @@ module Api
 
       rescue_from ActiveRecord::RecordInvalid, with: :invalid_params
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
+      rescue_from ApiErrors::BaseError, with: :render_api_error
 
       # -------------
       # Helpers

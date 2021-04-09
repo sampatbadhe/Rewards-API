@@ -8,6 +8,6 @@ Apipie.configure do |config|
   config.swagger_content_type_input = :json
 
   config.app_info = <<-EOS
-    TODO: ADD GOOD DOCUMENTATION
+    == Getting Started
   EOS
 end
