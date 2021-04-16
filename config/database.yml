@@ -20,5 +20,5 @@ staging:
 
 production:
   <<: *default
-  database: rewards_server_production
+  database: <%= ENV['DATABASE_URL'] %>
   pool: <%= ENV['MAX_THREADS'] || 25 %>
