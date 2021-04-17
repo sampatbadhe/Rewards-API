@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# ApplicationController
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
   include ActionController::Helpers
   include TokenValidatable
+  skip_before_action :verify_authenticity_token
 
   helper_method :current_user
   before_action :current_user
