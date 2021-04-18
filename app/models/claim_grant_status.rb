@@ -1,0 +1,2 @@
+class ClaimGrantStatus < ApplicationRecord
+end
