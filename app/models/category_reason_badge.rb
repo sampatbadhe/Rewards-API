@@ -1,0 +1,2 @@
+class CategoryReasonBadge < ApplicationRecord
+end
