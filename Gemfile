@@ -10,6 +10,9 @@ gem 'apipie-rails'
 gem 'dotenv-rails'
 gem 'jwt', '~> 2.2.2'
 
+gem 'activeadmin'
+gem 'devise'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
