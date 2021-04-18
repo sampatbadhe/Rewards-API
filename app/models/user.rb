@@ -6,6 +6,8 @@ class User < ApplicationRecord
   validates_presence_of :google_uid
   validates_presence_of :email
 
+  has_many :rewards, dependent: :destroy
+
   def self.register_user(params)
     email, first_name, last_name, google_uid = params.values_at(:email, :first_name, :last_name, :google_uid)
 
