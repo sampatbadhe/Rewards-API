@@ -4,7 +4,7 @@ module Api
     # API V1 UsersController
     class UsersController < Api::V1::ApiController
 
-      def user_details
+      def show
         render json: current_user, status: :ok
       end
     end
