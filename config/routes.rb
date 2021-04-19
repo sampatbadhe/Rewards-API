@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1', defaults: { format: 'json' } do
       post 'auth/google_signup', to: 'authentication#google_signup'
+      resource :user, only: [:show]
     end
   end
 end
