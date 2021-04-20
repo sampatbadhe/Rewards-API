@@ -64,7 +64,7 @@ module Api
 
       def reward_params
         params.require(:reward).permit(:activity_date, :category_id,
-          :category_reason_id, :badge_id, :comments, :claim_grant_status_id)
+          :category_reason_id, :badge_id, :comments, :status)
       end
     end
   end
