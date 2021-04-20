@@ -8,12 +8,13 @@ module Api
       api :GET, '/v1/rewards', 'List all rewards'
       def index
         @rewards = current_user.rewards
+        apply_filters
         render json: @rewards, status: :ok
       end
 
       api :POST, '/v1/rewards', 'Create a reward'
       def create
-        @reward = current_user.rewards.new(reward_params)
+        @reward = current_user.rewards.pending.new(reward_params)
         if @reward.save
           render json: @reward, status: :created
         else
@@ -36,6 +37,26 @@ module Api
       end
 
       private
+
+      def apply_filter
+        status_filter = params[:status].presence
+        if ['pending', 'not_pending'].include?(status_filter)
+          @rewards = @rewards.send(status_filter)
+        end
+
+        start_date = params[:start_date].to_date
+        end_date = params[:end_date].to_date || start_date
+
+        if start_date && end_date
+          @rewards = @rewards.by_date_range(start_date, end_date)
+        end
+
+        category_id = params[:category_id].presence
+
+        if category_id
+          @rewards = @rewards.by_category_id(category_id)
+        end
+      end
 
       def set_reward
         @reward = current_user.rewards.find(params[:id])
