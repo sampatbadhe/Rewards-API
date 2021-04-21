@@ -302,6 +302,7 @@ DEPENDENCIES
   grape-swagger-rails
   jbuilder (~> 2.7)
   jwt (~> 2.2.2)
+  kaminari (~> 1.2, >= 1.2.1)
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
