@@ -9,7 +9,7 @@ module Api
       def index
         @rewards = current_user.rewards
         apply_filters
-        render json: @rewards, status: :ok
+        render json: @rewards.page(page).per(per_page), status: :ok
       end
 
       api :POST, '/v1/rewards', 'Create a reward'
@@ -38,14 +38,14 @@ module Api
 
       private
 
-      def apply_filter
+      def apply_filters
         status_filter = params[:status].presence
         if ['pending', 'not_pending'].include?(status_filter)
           @rewards = @rewards.send(status_filter)
         end
 
-        start_date = params[:start_date].to_date
-        end_date = params[:end_date].to_date || start_date
+        start_date = params[:start_date]&.to_date
+        end_date = params[:end_date]&.to_date || start_date
 
         if start_date && end_date
           @rewards = @rewards.by_date_range(start_date, end_date)
