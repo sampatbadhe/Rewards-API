@@ -8,8 +8,7 @@ module Api
       api :GET, '/v1/rewards', 'List all rewards'
       def index
         @rewards = current_user.rewards
-        apply_filters
-        render json: @rewards, status: :ok
+        render json: @rewards.page(page).per(per_page), status: :ok
       end
 
       api :POST, '/v1/rewards', 'Create a reward'
