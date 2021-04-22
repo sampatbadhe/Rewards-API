@@ -12,7 +12,6 @@ Rails.application.routes.draw do
       post 'auth/google_signup', to: 'authentication#google_signup'
       resource :user, only: [:show]
       resources :rewards, only: [:index, :create, :show, :update]
-      resources :category_reason_badges, only: [:index]
       resources :category_reasons, only: [:index]
       resources :categories, only: [:index]
       resources :badges, only: [:index]

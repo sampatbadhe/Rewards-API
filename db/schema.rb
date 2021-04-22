@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_171157) do
+ActiveRecord::Schema.define(version: 2021_04_22_190621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,17 +51,6 @@ ActiveRecord::Schema.define(version: 2021_04_20_171157) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "category_reason_badges", force: :cascade do |t|
-    t.bigint "category_id"
-    t.bigint "category_reason_id"
-    t.bigint "badge_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["badge_id"], name: "index_category_reason_badges_on_badge_id"
-    t.index ["category_id"], name: "index_category_reason_badges_on_category_id"
-    t.index ["category_reason_id"], name: "index_category_reason_badges_on_category_reason_id"
   end
 
   create_table "category_reasons", force: :cascade do |t|
