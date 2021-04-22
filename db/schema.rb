@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_191334) do
+ActiveRecord::Schema.define(version: 2021_04_22_191814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,13 +66,11 @@ ActiveRecord::Schema.define(version: 2021_04_22_191334) do
     t.date "activity_date"
     t.bigint "category_id"
     t.bigint "category_reason_id"
-    t.bigint "badge_id"
     t.string "comments"
     t.bigint "claim_grant_status_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status"
-    t.index ["badge_id"], name: "index_rewards_on_badge_id"
     t.index ["category_id"], name: "index_rewards_on_category_id"
     t.index ["category_reason_id"], name: "index_rewards_on_category_reason_id"
     t.index ["claim_grant_status_id"], name: "index_rewards_on_claim_grant_status_id"
