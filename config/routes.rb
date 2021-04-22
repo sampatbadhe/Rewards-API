@@ -14,7 +14,6 @@ Rails.application.routes.draw do
       resources :rewards, only: [:index, :create, :show, :update]
       resources :category_reasons, only: [:index]
       resources :categories, only: [:index]
-      resources :badges, only: [:index]
     end
   end
 end
