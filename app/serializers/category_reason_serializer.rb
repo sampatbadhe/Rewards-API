@@ -1,5 +1,5 @@
 class CategoryReasonSerializer < ActiveModel::Serializer
-  attributes :id, :category_id, :category_name, :reason
+  attributes :id, :category_id, :category_name, :reason, :badge
 
   def category_id
     object.category.id

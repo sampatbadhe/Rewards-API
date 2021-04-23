@@ -12,22 +12,15 @@ AdminUser.create!(email: 'admin@example.com', password: 'password', password_con
   ClaimGrantStatus.find_or_create_by!(granted_status: status)
 end
 
-%i[Gold Silver Bronze].each do |badge|
-  Badge.find_or_create_by!(name: badge)
-end
-
-
 {
-  'KFC' => { 'Meeting' => 'Bronze', 'Organize Event' => 'Silver' },
-  'COE' => { 'Meeting' => 'Bronze', 'Organize Event' => 'Silver' },
-  'Hiring' => { 'Interview' => 'Bronze', 'Code Review' => 'Bronze', 'Prepared question set' => 'Bronze' },
-  'Referral' => { 'Gifted a Career' => 'Gold' },
-  'Others' => { 'New Initiative Implemented' => 'Bronze', 'Improved Existing Process' => 'Bronze', 'Other' => 'Bronze' }
+  'KFC' => { 'Meeting' => 'bronze', 'Organize Event' => 'silver' },
+  'COE' => { 'Meeting' => 'bronze', 'Organize Event' => 'silver' },
+  'Hiring' => { 'Interview' => 'bronze', 'Code Review' => 'bronze', 'Prepared question set' => 'bronze' },
+  'Referral' => { 'Gifted a Career' => 'gold' },
+  'Others' => { 'New Initiative Implemented' => 'bronze', 'Improved Existing Process' => 'bronze', 'Other' => 'bronze' }
 }.each do |category_name, category_reasons|
   category = Category.find_or_create_by!(name: category_name)
   category_reasons.each do |reason, badge|
-    category_reason = CategoryReason.find_or_create_by(category_id: category.id, reason: reason)
-    CategoryReasonBadge.find_or_create_by(category_id: category.id, category_reason_id: category_reason.id, badge_id: Badge.find_or_create_by!(name: badge).id)
-
+    CategoryReason.find_or_create_by(category_id: category.id, reason: reason, badge: badge)
   end
 end

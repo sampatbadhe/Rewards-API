@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_171157) do
+ActiveRecord::Schema.define(version: 2021_04_22_192532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,27 +41,10 @@ ActiveRecord::Schema.define(version: 2021_04_20_171157) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "badges", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "category_reason_badges", force: :cascade do |t|
-    t.bigint "category_id"
-    t.bigint "category_reason_id"
-    t.bigint "badge_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["badge_id"], name: "index_category_reason_badges_on_badge_id"
-    t.index ["category_id"], name: "index_category_reason_badges_on_category_id"
-    t.index ["category_reason_id"], name: "index_category_reason_badges_on_category_reason_id"
   end
 
   create_table "category_reasons", force: :cascade do |t|
@@ -69,6 +52,7 @@ ActiveRecord::Schema.define(version: 2021_04_20_171157) do
     t.string "reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "badge"
     t.index ["category_id"], name: "index_category_reasons_on_category_id"
   end
 
@@ -83,13 +67,11 @@ ActiveRecord::Schema.define(version: 2021_04_20_171157) do
     t.date "activity_date"
     t.bigint "category_id"
     t.bigint "category_reason_id"
-    t.bigint "badge_id"
     t.string "comments"
     t.bigint "claim_grant_status_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status"
-    t.index ["badge_id"], name: "index_rewards_on_badge_id"
     t.index ["category_id"], name: "index_rewards_on_category_id"
     t.index ["category_reason_id"], name: "index_rewards_on_category_reason_id"
     t.index ["claim_grant_status_id"], name: "index_rewards_on_claim_grant_status_id"

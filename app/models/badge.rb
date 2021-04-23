@@ -1,2 +1,0 @@
-class Badge < ApplicationRecord
-end
