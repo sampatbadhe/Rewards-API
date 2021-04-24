@@ -9,6 +9,7 @@ class CategoryReason < ApplicationRecord
   validates_presence_of :badge
 
   belongs_to :category
+  has_many :rewards, dependent: :restrict_with_error
 
   def name
     reason

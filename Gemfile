@@ -11,6 +11,7 @@ gem 'dotenv-rails'
 gem 'jwt', '~> 2.2.2'
 
 gem 'activeadmin'
+gem 'activeadmin_addons'
 gem 'devise'
 
 # Use postgresql as the database for Active Record
