@@ -1,4 +1,6 @@
 ActiveAdmin.register Reward do
+  actions :all, except: [:destroy]
+
   scope :all
   scope :pending, default: true
   scope :approved
