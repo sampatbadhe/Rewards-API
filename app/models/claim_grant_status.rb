@@ -1,2 +1,0 @@
-class ClaimGrantStatus < ApplicationRecord
-end

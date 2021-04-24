@@ -7,11 +7,6 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
-
-%i[Approved Rejected Withdrawn Pending].each do |status|
-  ClaimGrantStatus.find_or_create_by!(granted_status: status)
-end
-
 {
   'KFC' => { 'Meeting' => 'bronze', 'Organize Event' => 'silver' },
   'COE' => { 'Meeting' => 'bronze', 'Organize Event' => 'silver' },
