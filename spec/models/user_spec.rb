@@ -8,13 +8,17 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:first_name) }
   it { is_expected.to validate_presence_of(:last_name) }
 
-  it { is_expected.to have_many(:rewards).dependent(:destroy) }
-
   describe 'Instance Methods' do
     describe '#full_name' do
       it 'returns full name of the User' do
         expect(user.full_name).to eq('John Doe')
       end
+    end
+  end
+
+  describe 'Class Methods' do
+    describe '.register_user' do
+      # need to complete spec
     end
   end
 end
