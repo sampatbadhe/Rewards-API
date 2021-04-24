@@ -1,3 +1,4 @@
+@import 'activeadmin_addons/all';
 // Sass variable overrides must be declared before loading up Active Admin's styles.
 //
 // To view the variables that Active Admin provides, take a look at
@@ -15,3 +16,21 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+$gold-color: gold;
+$silver-color: silver;
+$bronze-color: #cd7f32;
+$pending-color: #FF9900;
+$rejected-color: #FF0000;
+$approved-color: #08A510;
+$withdrawn-color: gray;
+
+.status_tag {
+  &.gold { background: $gold-color; }
+  &.silver { background: $silver-color; }
+  &.bronze { background: $bronze-color; }
+  &.pending { background: $pending-color; }
+  &.rejected { background: $rejected-color; }
+  &.approved { background: $approved-color; }
+  &.withdrawn { background: $withdrawn-color; }
+}
