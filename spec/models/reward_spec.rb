@@ -15,7 +15,7 @@ RSpec.describe Reward, type: :model do
     end
 
     describe '.by_date_range' do
-      it 'returns rewards for within the given date range' do
+      it 'returns rewards within the given date range' do
         expect(Reward.by_date_range(todays_date, todays_date + 1.day).count).to eq(2)
         expect(Reward.by_date_range(yesterdays_date - 2.days, yesterdays_date).count).to eq(0)
       end
