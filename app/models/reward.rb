@@ -1,7 +1,13 @@
 class Reward < ApplicationRecord
-  enum status: %i[approved rejected withdrawn pending]
+  enum status: {
+    pending: 0,
+    approved: 1,
+    rejected: 2,
+    withdrawn: 3
+  }, _default: 'pending'
 
   validates_presence_of :activity_date
+  validates_presence_of :status
 
   belongs_to :user
   belongs_to :category
