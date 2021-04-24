@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_192532) do
+ActiveRecord::Schema.define(version: 2021_04_24_030627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,12 +54,6 @@ ActiveRecord::Schema.define(version: 2021_04_22_192532) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "badge"
     t.index ["category_id"], name: "index_category_reasons_on_category_id"
-  end
-
-  create_table "claim_grant_statuses", force: :cascade do |t|
-    t.string "granted_status"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "rewards", force: :cascade do |t|
