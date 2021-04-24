@@ -21,7 +21,7 @@ class User < ApplicationRecord
     user
   end
 
-  def to_s
+  def full_name
     [first_name, last_name].reject(&:blank?).join(' ')
   end
 end
