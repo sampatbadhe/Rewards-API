@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
-  let(:new_user) { build(:user) }
 
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_presence_of(:google_uid) }
