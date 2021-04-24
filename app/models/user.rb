@@ -20,4 +20,8 @@ class User < ApplicationRecord
     user.save!
     user
   end
+
+  def to_s
+    [first_name, last_name].reject(&:blank?).join(' ')
+  end
 end
