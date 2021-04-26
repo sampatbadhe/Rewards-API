@@ -30,7 +30,7 @@ module Api
       api :PUT, '/v1/rewards/1', 'Update a reward'
       def update
         if @reward.update(reward_params)
-          render json: @reward, status: :updated
+          render json: @reward, status: :ok
         else
           render json: @reward.errors, status: :unprocessable_entity
         end
