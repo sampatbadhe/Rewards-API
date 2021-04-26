@@ -36,6 +36,11 @@ module Api
         end
       end
 
+      api :GET, '/v1/rewards/my_view', 'Returns current user rewards details'
+      def my_view
+        render json: current_user, serializer: my_view_serializer
+      end
+
       private
 
       def apply_filters
@@ -65,6 +70,10 @@ module Api
       def reward_params
         params.require(:reward).permit(:activity_date, :category_id,
           :category_reason_id, :comments, :status)
+      end
+
+      def my_view_serializer
+        MyViewSerializer
       end
     end
   end
