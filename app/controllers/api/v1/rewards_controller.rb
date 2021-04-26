@@ -38,7 +38,7 @@ module Api
 
       api :GET, '/v1/rewards/my_view', 'Returns current user rewards details'
       def my_view
-        render json: current_user, serializer: serializer
+        render json: current_user, serializer: my_view_serializer
       end
 
       private
@@ -72,7 +72,7 @@ module Api
           :category_reason_id, :comments, :status)
       end
 
-      def serializer
+      def my_view_serializer
         MyViewSerializer
       end
     end
