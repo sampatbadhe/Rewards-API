@@ -1,5 +1,9 @@
 class MyViewSerializer < ActiveModel::Serializer
-  attributes :badges_by_category, :badges_tally
+  attributes :categories, :badges_by_category, :badges_tally
+
+  def categories
+    Category.pluck(:name)
+  end
 
   def badges_by_category
     badge_counts = {}
