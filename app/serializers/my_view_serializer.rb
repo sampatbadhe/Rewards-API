@@ -2,11 +2,15 @@ class MyViewSerializer < ActiveModel::Serializer
   attributes :badges_by_category, :badges_tally
 
   def badges_by_category
-    badge_counts = Hash[Category.pluck(:name).collect { |cg_name| [cg_name, 0] }]
-    object.rewards.approved.group_by(&:category).each do |category, rewards|
-      badge_counts[category.name] = rewards.count
+    rewards_count = object.rewards.approved.group(:category_id).count
+
+    Category.all.map do |category|
+      {
+        category_id: category.id,
+        category_name: category.name,
+        total_badge_count: rewards_count[category.id] || 0
+      }
     end
-    badge_counts
   end
 
   def badges_tally
