@@ -24,4 +24,10 @@ class User < ApplicationRecord
   def full_name
     [first_name, last_name].reject(&:blank?).join(' ')
   end
+
+  # returns user's gravatar photo url
+  def photo_url
+    gravatar_id = Digest::MD5.hexdigest(email.downcase)
+    "http://gravatar.com/avatar/#{gravatar_id}.png"
+  end
 end
