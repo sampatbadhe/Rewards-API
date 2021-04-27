@@ -12,6 +12,6 @@ class MyViewSerializer < ActiveModel::Serializer
   def badges_tally
     default_badges_count = { 'gold' => 0, 'silver' => 0, 'bronze' => 0 }
     badges = object.rewards.approved.includes(:category_reason).map(&:badge)
-    badges.tally.merge!(default_badges_count) { |_key, old_value, new_value| [old_value, new_value].max }
+    default_badges_count.merge(badges.tally)
   end
 end
