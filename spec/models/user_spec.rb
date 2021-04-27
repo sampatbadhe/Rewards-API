@@ -22,6 +22,12 @@ RSpec.describe User, type: :model do
         expect(user.full_name).to eq('John Doe')
       end
     end
+
+    describe '#photo_url' do
+      it 'returns user\'s gravatar photo url' do
+        expect(user.photo_url).to eq("http://gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email.downcase)}.png")
+      end
+    end
   end
 
   describe 'Class Methods' do
