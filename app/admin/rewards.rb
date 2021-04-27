@@ -27,15 +27,19 @@ ActiveAdmin.register Reward do
     end
   end
 
-  index do |reward|
+  index do
     column :user
     column :activity_date
     column :category
-    column :category_reason
-    column :comments
-    column :status do |i|
-      status_tag i.status
+    column :category_reason do |reward|
+      if reward.category.name.downcase == "others"
+        "*#{reward.category_reason.name}"
+      else
+        reward.category_reason.name
+      end
     end
+    column :comments
+    tag_column :status
     actions
   end
 
@@ -71,5 +75,32 @@ ActiveAdmin.register Reward do
       end
     end
     f.actions
+  end
+
+  member_action :approve, method: :put do
+    resource.approved!
+    redirect_to resource_path, notice: "Approved!"
+  end
+
+  member_action :reject, method: :put do
+    resource.rejected!
+    redirect_to resource_path, notice: "Rejected!"
+  end
+
+  member_action :reset, method: :put do
+    resource.pending!
+    redirect_to resource_path, notice: "Reset!"
+  end
+
+  action_item :approve, only: :show do
+    link_to 'Approve!', approve_admin_reward_path(resource), method: :put if resource.pending?
+  end
+
+  action_item :reject, only: :show do
+    link_to 'Reject!', reject_admin_reward_path(resource), method: :put if resource.pending?
+  end
+
+  action_item :reset, only: :show do
+    link_to 'Reset!', reset_admin_reward_path(resource), method: :put if resource.approved? || resource.rejected?
   end
 end
