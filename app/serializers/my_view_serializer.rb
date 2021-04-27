@@ -2,11 +2,13 @@ class MyViewSerializer < ActiveModel::Serializer
   attributes :badges_by_category, :badges_tally
 
   def badges_by_category
+    rewards_count = object.rewards.approved.group(:category_id).count
+
     Category.all.map do |category|
       {
         category_id: category.id,
         category_name: category.name,
-        total_badge_count: object.rewards.approved.by_category_id(category.id).count
+        total_badge_count: rewards_count[category.id] || 0
       }
     end
   end
