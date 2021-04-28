@@ -20,6 +20,9 @@ ActiveAdmin.register Reward do
       row :activity_date
       row :category
       row :category_reason
+      row :badge do |reward|
+        status_tag(reward.category_reason.badge)
+      end
       row :comments
       row :status do |i|
         status_tag i.status
@@ -37,6 +40,9 @@ ActiveAdmin.register Reward do
       else
         reward.category_reason.name
       end
+    end
+    column :badge do |reward|
+      status_tag(reward.category_reason.badge)
     end
     column :comments
     tag_column :status
