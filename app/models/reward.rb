@@ -15,6 +15,7 @@ class Reward < ApplicationRecord
 
   scope :by_date_range, ->(start_date, end_date) { where(activity_date: start_date..end_date) }
   scope :by_category_id, ->(category_id) { where(category: category_id) }
+  scope :by_recently_created, -> { order(created_at: :desc) }
 
   delegate :badge, to: :category_reason
 end
