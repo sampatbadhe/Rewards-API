@@ -9,6 +9,8 @@ class Reward < ApplicationRecord
   validates_presence_of :activity_date
   validates_presence_of :status
 
+  has_many :notifications, as: :alertable, dependent: :destroy
+
   belongs_to :user
   belongs_to :category
   belongs_to :category_reason
