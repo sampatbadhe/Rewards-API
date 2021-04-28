@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     namespace 'v1', defaults: { format: 'json' } do
       post 'auth/google_signup', to: 'authentication#google_signup'
       resource :user, only: [:show]
+      resource :dashboard, only: [:show], controller: 'dashboard'
       resources :rewards, only: [:index, :create, :show, :update] do
         get 'my_view', on: :collection
       end
