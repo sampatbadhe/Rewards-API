@@ -31,7 +31,7 @@ class User < ApplicationRecord
     "http://gravatar.com/avatar/#{gravatar_id}.png"
   end
 
-  # returns contributors in descending order of their contribution
+  # returns top contributors in descending order of their contribution
   # Badges have value assigned to it { Gold => 3, Silver => 2, Bronze => 1 }
   # Based on the sum of badges value user will be listed on top.
   def self.top_contributors
@@ -46,10 +46,9 @@ class User < ApplicationRecord
   end
 
   # returns top contributors of last month span
-  def self.star_of_the_month
+  def self.heros_of_the_month
     User
       .top_contributors
       .where("rewards.activity_date >= ?", 1.month.ago.to_date)
-      .first
   end
 end

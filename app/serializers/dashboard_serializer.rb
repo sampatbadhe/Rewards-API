@@ -1,5 +1,5 @@
 class DashboardSerializer < ActiveModel::Serializer
-  attributes :top_3_contributors, :star_of_the_month, :overall_stats
+  attributes :top_3_contributors, :heros_of_the_month, :overall_stats
 
   def top_3_contributors
     top_3 = User.top_contributors.limit(3)
@@ -20,22 +20,23 @@ class DashboardSerializer < ActiveModel::Serializer
     end
   end
 
-  def star_of_the_month
-    star_of_the_month = User.star_of_the_month
-    return [] unless star_of_the_month
-    badges_count = star_of_the_month.rewards.approved.joins(:category_reason).group("category_reasons.badge").count
-    [{
-      user_id: star_of_the_month.id,
-      first_name: star_of_the_month.first_name,
-      last_name: star_of_the_month.last_name,
-      photo_url: star_of_the_month.photo_url,
-      total_count: star_of_the_month.badges_count,
-      badges: {
-        gold: badges_count[CategoryReason.badges[:gold]].to_i,
-          silver: badges_count[CategoryReason.badges[:silver]].to_i,
-          bronze: badges_count[CategoryReason.badges[:bronze]].to_i
-      }
-    }]
+  def heros_of_the_month
+    top_3 = User.heros_of_the_month.limit(3)
+    top_3.map do |hero_of_the_month|
+      badges_count = hero_of_the_month.rewards.approved.joins(:category_reason).group("category_reasons.badge").count
+      [{
+        user_id: hero_of_the_month.id,
+        first_name: hero_of_the_month.first_name,
+        last_name: hero_of_the_month.last_name,
+        photo_url: hero_of_the_month.photo_url,
+        total_count: hero_of_the_month.badges_count,
+        badges: {
+          gold: badges_count[CategoryReason.badges[:gold]].to_i,
+            silver: badges_count[CategoryReason.badges[:silver]].to_i,
+            bronze: badges_count[CategoryReason.badges[:bronze]].to_i
+        }
+      }]
+    end
   end
 
   def overall_stats
