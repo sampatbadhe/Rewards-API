@@ -30,4 +30,26 @@ class User < ApplicationRecord
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
     "http://gravatar.com/avatar/#{gravatar_id}.png"
   end
+
+  # returns contributors in descending order of their contribution
+  # Badges have value assigned to it { Gold => 3, Silver => 2, Bronze => 1 }
+  # Based on the sum of badges value user will be listed on top.
+  def self.top_contributors
+    User
+      .joins(rewards: :category_reason )
+      .where(rewards: { status: :approved })
+      .select(:id, :first_name, :last_name, :email)
+      .select('SUM(category_reasons.badge) as badges_sum')
+      .select('COUNT(category_reasons.badge) as badges_count')
+      .order('badges_sum DESC')
+      .group('users.id')
+  end
+
+  # returns top contributors of last month span
+  def self.star_of_the_month
+    User
+      .top_contributors
+      .where("rewards.activity_date >= ?", 1.month.ago.to_date)
+      .first
+  end
 end
