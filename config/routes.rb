@@ -3,8 +3,6 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   apipie
 
-  root controller: 'static', action: '/'
-
   mount GrapeSwaggerRails::Engine => '/swagger' if Rails.env.staging? || Rails.env.development?
 
   namespace 'api' do
@@ -18,4 +16,5 @@ Rails.application.routes.draw do
       resources :categories, only: [:index]
     end
   end
+  root 'home#index'
 end
