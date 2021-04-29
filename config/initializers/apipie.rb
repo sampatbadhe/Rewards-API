@@ -6,6 +6,8 @@ Apipie.configure do |config|
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/**/*.rb"
   config.default_version = 'v1'
   config.swagger_content_type_input = :json
+  config.default_locale = 'en'
+  config.languages = ['en']
 
   config.app_info = <<-EOS
     == Getting Started
