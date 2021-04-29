@@ -36,11 +36,14 @@ class User < ApplicationRecord
   # Badges have value assigned to it { Gold => 3, Silver => 2, Bronze => 1 }
   # Based on the sum of badges value user will be listed on top.
   def self.top_contributors
-    joins(rewards: :category_reason )
+    joins(rewards: :category_reason)
       .where(rewards: { status: :approved })
       .select(:id, :first_name, :last_name, :email)
-      .select('SUM(category_reasons.badge) as badges_sum')
-      .select('COUNT(category_reasons.badge) as badges_count')
+      .select('SUM(category_reasons.badge) AS badges_sum')
+      .select('COUNT(category_reasons.badge) AS badges_count')
+      .select("SUM(CASE WHEN category_reasons.badge = '#{CategoryReason.badges[:gold]}' THEN 1 ELSE 0 END) AS gold")
+      .select("SUM(CASE WHEN category_reasons.badge = '#{CategoryReason.badges[:silver]}' THEN 1 ELSE 0 END) AS silver")
+      .select("SUM(CASE WHEN category_reasons.badge = '#{CategoryReason.badges[:bronze]}' THEN 1 ELSE 0 END) AS bronze")
       .order('badges_sum DESC')
       .group('users.id')
   end
@@ -54,6 +57,6 @@ class User < ApplicationRecord
   # returns top contributors of last month span
   def self.heroes_of_the_last_month
     top_contributors
-      .where("rewards.activity_date >= ?", 1.month.ago.to_date)
+      .where(rewards: { activity_date: Date.today.last_month.beginning_of_month..Date.today.last_month.end_of_month })
   end
 end
