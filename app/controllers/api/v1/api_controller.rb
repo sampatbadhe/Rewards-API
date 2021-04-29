@@ -6,7 +6,7 @@ module Api
       include TokenValidatable
 
       resource_description do
-        api_version 'v2'
+        api_version 'v1'
       end
 
       skip_before_action :validate_token, only: [:error]
