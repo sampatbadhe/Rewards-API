@@ -6,7 +6,6 @@ class DashboardSerializer < ActiveModel::Serializer
     top_3 = User.top_contributors_by_rank.select { |user| user.rank <= 3 }
 
     top_3.map do |user|
-      badges_count = user.rewards.approved.joins(:category_reason).group("category_reasons.badge").count
       {
         user_id: user.id,
         first_name: user.first_name,
@@ -16,9 +15,9 @@ class DashboardSerializer < ActiveModel::Serializer
         badges_count: user.badges_count,
         rank: user.rank,
         badges: {
-          gold: badges_count[CategoryReason.badges[:gold]].to_i,
-          silver: badges_count[CategoryReason.badges[:silver]].to_i,
-          bronze: badges_count[CategoryReason.badges[:bronze]].to_i
+          gold: user.gold.to_i,
+          silver: user.silver.to_i,
+          bronze: user.bronze.to_i
         }
       }
     end
@@ -28,7 +27,6 @@ class DashboardSerializer < ActiveModel::Serializer
   def heroes_of_the_last_month
     top_5 = User.heroes_of_the_last_month.limit(5)
     top_5.map do |user|
-      badges_count = user.rewards.approved.joins(:category_reason).group("category_reasons.badge").count
       {
         user_id: user.id,
         first_name: user.first_name,
@@ -37,9 +35,9 @@ class DashboardSerializer < ActiveModel::Serializer
         badges_sum: user.badges_sum,
         badges_count: user.badges_count,
         badges: {
-          gold: badges_count[CategoryReason.badges[:gold]].to_i,
-            silver: badges_count[CategoryReason.badges[:silver]].to_i,
-            bronze: badges_count[CategoryReason.badges[:bronze]].to_i
+          gold: user.gold.to_i,
+          silver: user.silver.to_i,
+          bronze: user.bronze.to_i
         }
       }
     end
