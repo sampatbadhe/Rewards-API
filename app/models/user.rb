@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates_presence_of :email
 
   has_many :rewards, dependent: :destroy
+  has_many :notifications, class_name: 'Notification', foreign_key: :recipient_id, inverse_of: :recipient
 
   def self.register_user(params)
     email, first_name, last_name, google_uid = params.values_at(:email, :first_name, :last_name, :google_uid)
