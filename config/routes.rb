@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       end
       resources :category_reasons, only: [:index]
       resources :categories, only: [:index]
+      resources :notifications, only: [:index]
     end
   end
 end
