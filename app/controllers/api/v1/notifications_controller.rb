@@ -4,6 +4,7 @@ module Api
     # API V1 NotificationsController
     class NotificationsController < Api::V1::ApiController
 
+      api :GET, '/v1/notifications', 'List all Notifications'
       def index
         @notifications = current_user.notifications.by_recently_created
         meta = {
