@@ -22,7 +22,7 @@ module Api
           param :activity_date, String, desc: "Date when activity was conducted", allow_nil: false
           param :category_id, Integer, desc: "Category ID", allow_nil: false
           param :category_reason_id, Integer, desc: "CategoryReason ID", allow_nil: false
-          param :comments, String, desc: "Not yet used", allow_nil: true
+          param :comments, String, desc: "User can add additional comments about activity or reward", allow_nil: true
           param :status, Integer, desc: "enum for specific status", allow_nil: true
         end
       end
