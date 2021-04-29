@@ -5,6 +5,28 @@ module Api
     class RewardsController < Api::V1::ApiController
       before_action :set_reward, only: %i[show update]
 
+      resource_description do
+        short "List, create, update and delete rewards."
+        description <<-EOS
+          Only rewards associated to the current user are returned.
+        EOS
+        formats ['json']
+        error 401, "Unauthorized"
+        error 404, "Not Found"
+        error 422, "Validation Error"
+        error 500, "Internal Server Error"
+      end
+
+      def_param_group :reward do
+        param :reward, Hash, required: true do
+          param :activity_date, String, desc: "Date when activity was conducted", allow_nil: false
+          param :category_id, Integer, desc: "Category ID", allow_nil: false
+          param :category_reason_id, Integer, desc: "CategoryReason ID", allow_nil: false
+          param :comments, String, desc: "User can add additional comments about activity or reward", allow_nil: true
+          param :status, Integer, desc: "enum for specific status", allow_nil: true
+        end
+      end
+
       api :GET, '/v1/rewards', 'List all rewards'
       def index
         @rewards = current_user.rewards.by_recently_created
