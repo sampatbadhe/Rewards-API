@@ -35,8 +35,7 @@ class User < ApplicationRecord
   # Badges have value assigned to it { Gold => 3, Silver => 2, Bronze => 1 }
   # Based on the sum of badges value user will be listed on top.
   def self.top_contributors
-    User
-      .joins(rewards: :category_reason )
+    joins(rewards: :category_reason )
       .where(rewards: { status: :approved })
       .select(:id, :first_name, :last_name, :email)
       .select('SUM(category_reasons.badge) as badges_sum')
@@ -45,10 +44,15 @@ class User < ApplicationRecord
       .group('users.id')
   end
 
+  # Assign rank to contributors based on badges value.
+  def self.top_contributors_by_rank
+    top_contributors
+      .select("DENSE_RANK() OVER (ORDER BY SUM(category_reasons.badge) DESC) AS rank")
+  end
+
   # returns top contributors of last month span
   def self.heros_of_the_last_month
-    User
-      .top_contributors
+    top_contributors
       .where("rewards.activity_date >= ?", 1.month.ago.to_date)
   end
 end
