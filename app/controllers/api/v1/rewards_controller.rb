@@ -3,13 +3,18 @@ module Api
   module V1
     # API V1 RewardsController
     class RewardsController < Api::V1::ApiController
-      before_action :set_reward, only: [:show, :update]
+      before_action :set_reward, only: %i[show update]
 
       api :GET, '/v1/rewards', 'List all rewards'
       def index
         @rewards = current_user.rewards.by_recently_created
+        meta = {
+          total_count: @rewards.count,
+          current_page: page,
+          per_page: per_page
+        }
         apply_filters
-        render json: @rewards.page(page).per(per_page), status: :ok
+        render json: { meta: meta }.merge(serialized_rewards(@rewards)), status: :ok
       end
 
       api :POST, '/v1/rewards', 'Create a reward'
@@ -45,7 +50,7 @@ module Api
 
       def apply_filters
         status_filter = params[:status].presence
-        if ['pending', 'not_pending'].include?(status_filter)
+        if %w[pending not_pending].include?(status_filter)
           @rewards = @rewards.send(status_filter)
         end
 
@@ -61,6 +66,7 @@ module Api
         if category_id
           @rewards = @rewards.by_category_id(category_id)
         end
+        @rewards = @rewards.page(page).per(per_page)
       end
 
       def set_reward
@@ -74,6 +80,18 @@ module Api
 
       def my_view_serializer
         MyViewSerializer
+      end
+
+      def rewards_serializer
+        RewardSerializer
+      end
+
+      def serialized_rewards(rewards)
+        ActiveModel::ArraySerializer.new(
+          rewards,
+          each_serializer: rewards_serializer,
+          root: 'rewards'
+        ).as_json
       end
     end
   end
