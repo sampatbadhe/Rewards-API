@@ -34,7 +34,7 @@ class Reward < ApplicationRecord
   end
 
   def create_notification
-    message = "Reward #{id} has been #{changed_status} by the Admin"
+    message = "Reward for your #{category.name} contribution to #{category_reason.reason} on #{activity_date.strftime("%B %d, %Y")} has been #{changed_status} by Admin"
     notification = notifications.new(recipient_id: user_id, body: message)
     notification.save
   end
