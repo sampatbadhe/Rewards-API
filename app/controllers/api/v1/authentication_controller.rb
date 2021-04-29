@@ -16,6 +16,7 @@ module Api
         param :last_name, String, allow_nil: false, desc: 'Family name of the user'
         param :email, String, allow_nil: false, desc: 'User email address'
         param :google_uid, String, allow_nil: false, desc: 'OAuth Google User ID'
+        param :device_token, String, allow_nil: false, desc: 'Device token to send push notifications'
       end
 
       api :POST, '/v1/auth/google_signup', 'Signup via Google'
@@ -41,7 +42,7 @@ module Api
       private
 
       def auth_params
-        attributes = %i[first_name last_name email google_uid]
+        attributes = %i[first_name last_name email google_uid device_token]
         params.require(:user_auth).permit(attributes)
       end
 

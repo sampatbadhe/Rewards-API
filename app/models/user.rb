@@ -10,14 +10,13 @@ class User < ApplicationRecord
   has_many :notifications, class_name: 'Notification', foreign_key: :recipient_id, inverse_of: :recipient
 
   def self.register_user(params)
-    email, first_name, last_name, google_uid = params.values_at(:email, :first_name, :last_name, :google_uid)
+    email, first_name, last_name, google_uid, device_token = params.values_at(:email, :first_name, :last_name, :google_uid, :device_token)
 
-    raise ApiErrors::MissingParamsError.new('email/first_name/mobile/google_uid') if email.blank? || first_name.blank? || last_name.blank?
+    raise ApiErrors::MissingParamsError.new('email/first_name/mobile/google_uid') if email.blank? || first_name.blank? || last_name.blank? || google_uid.blank?
 
     user = User.find_by(google_uid: google_uid)
-    return user if user.present?
-
-    user = User.new(params)
+    user = User.new(params) unless user
+    user.device_token = device_token
     user.save!
     user
   end
