@@ -10,7 +10,7 @@ RSpec.describe 'Dashboard', type: :request do
       it 'returns rewards stats with status code 200' do
         get '/api/v1/dashboard'
         expect(json).not_to be_empty
-        expect(json["dashboard"].keys).to include("top_3_rank_contributors", "heros_of_the_last_month", "overall_stats")
+        expect(json["dashboard"].keys).to include("top_3_rank_contributors", "heroes_of_the_last_month", "overall_stats")
         expect(response).to have_http_status(200)
       end
     end

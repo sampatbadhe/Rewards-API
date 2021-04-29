@@ -51,7 +51,7 @@ class User < ApplicationRecord
   end
 
   # returns top contributors of last month span
-  def self.heros_of_the_last_month
+  def self.heroes_of_the_last_month
     top_contributors
       .where("rewards.activity_date >= ?", 1.month.ago.to_date)
   end
