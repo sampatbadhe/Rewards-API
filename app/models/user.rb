@@ -29,7 +29,7 @@ class User < ApplicationRecord
   # returns user's gravatar photo url
   def photo_url
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
-    "http://gravatar.com/avatar/#{gravatar_id}.png"
+    "https://gravatar.com/avatar/#{gravatar_id}.png"
   end
 
   # returns top contributors in descending order of their contribution
