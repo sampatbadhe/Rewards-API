@@ -10,7 +10,7 @@ RSpec.describe 'Users', type: :request do
       it 'returns current logged in user details with status code 200' do
         get '/api/v1/user'
         expect(json).not_to be_empty
-        expect(json['user'].size).to eq(6)
+        expect(json['user'].size).to eq(5)
         expect(json['user']).to have_key('id')
         expect(json['user']).to have_key('email')
         expect(json['user']).to have_key('photo_url')

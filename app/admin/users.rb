@@ -1,3 +1,8 @@
 ActiveAdmin.register User do
-  permit_params :first_name, :last_name, :email, :mobile, :google_uid
+  actions :index, :show
+
+  filter :first_name
+  filter :last_name
+  filter :email
+
 end

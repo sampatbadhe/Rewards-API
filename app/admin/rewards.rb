@@ -9,7 +9,7 @@ ActiveAdmin.register Reward do
 
   filter :user, as: :select, collection: User.all
   filter :activity_date
-  filter :status, as: :select, collection: %i[pending approved rejected withdrawn]
+  filter :status, as: :select, collection: Reward.statuses
   filter :category, as: :select, collection: Category.all
 
   permit_params :user_id, :activity_date, :category_id, :category_reason_id, :comments, :status

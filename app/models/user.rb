@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates_presence_of :email
 
   has_many :rewards, dependent: :destroy
+  has_many :notifications, class_name: 'Notification', foreign_key: :recipient_id, inverse_of: :recipient
 
   def self.register_user(params)
     email, first_name, last_name, google_uid = params.values_at(:email, :first_name, :last_name, :google_uid)
@@ -28,27 +29,34 @@ class User < ApplicationRecord
   # returns user's gravatar photo url
   def photo_url
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
-    "http://gravatar.com/avatar/#{gravatar_id}.png"
+    "https://gravatar.com/avatar/#{gravatar_id}.png"
   end
 
   # returns top contributors in descending order of their contribution
   # Badges have value assigned to it { Gold => 3, Silver => 2, Bronze => 1 }
   # Based on the sum of badges value user will be listed on top.
   def self.top_contributors
-    User
-      .joins(rewards: :category_reason )
+    joins(rewards: :category_reason)
       .where(rewards: { status: :approved })
       .select(:id, :first_name, :last_name, :email)
-      .select('SUM(category_reasons.badge) as badges_sum')
-      .select('COUNT(category_reasons.badge) as badges_count')
+      .select('SUM(category_reasons.badge) AS badges_sum')
+      .select('COUNT(category_reasons.badge) AS badges_count')
+      .select("SUM(CASE WHEN category_reasons.badge = '#{CategoryReason.badges[:gold]}' THEN 1 ELSE 0 END) AS gold")
+      .select("SUM(CASE WHEN category_reasons.badge = '#{CategoryReason.badges[:silver]}' THEN 1 ELSE 0 END) AS silver")
+      .select("SUM(CASE WHEN category_reasons.badge = '#{CategoryReason.badges[:bronze]}' THEN 1 ELSE 0 END) AS bronze")
       .order('badges_sum DESC')
       .group('users.id')
   end
 
+  # Assign rank to contributors based on badges value.
+  def self.top_contributors_by_rank
+    top_contributors
+      .select("DENSE_RANK() OVER (ORDER BY SUM(category_reasons.badge) DESC) AS rank")
+  end
+
   # returns top contributors of last month span
-  def self.heros_of_the_last_month
-    User
-      .top_contributors
-      .where("rewards.activity_date >= ?", 1.month.ago.to_date)
+  def self.heroes_of_the_last_month
+    top_contributors
+      .where(rewards: { activity_date: Date.today.last_month.beginning_of_month..Date.today.last_month.end_of_month })
   end
 end

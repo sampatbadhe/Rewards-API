@@ -9,6 +9,8 @@ class Reward < ApplicationRecord
   validates_presence_of :activity_date
   validates_presence_of :status
 
+  has_many :notifications, as: :alertable, dependent: :destroy
+
   belongs_to :user
   belongs_to :category
   belongs_to :category_reason
@@ -18,4 +20,22 @@ class Reward < ApplicationRecord
   scope :by_recently_created, -> { order(created_at: :desc) }
 
   delegate :badge, to: :category_reason
+
+  after_update :create_notification, if: :approved_or_rejected?
+
+  private
+
+  def changed_status
+    saved_changes[:status][1] if saved_changes[:status]
+  end
+
+  def approved_or_rejected?
+    %w[approved rejected].include?(changed_status)
+  end
+
+  def create_notification
+    message = "Reward for your #{category.name} contribution to #{category_reason.reason} on #{activity_date.strftime("%B %d, %Y")} has been #{changed_status}"
+    notification = notifications.new(recipient_id: user_id, body: message)
+    notification.save
+  end
 end

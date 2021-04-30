@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_28_012441) do
+ActiveRecord::Schema.define(version: 2021_04_29_122557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 2021_04_28_012441) do
     t.index ["category_id"], name: "index_category_reasons_on_category_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer "recipient_id"
+    t.text "body"
+    t.boolean "seen", default: false
+    t.string "alertable_type"
+    t.integer "alertable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "rewards", force: :cascade do |t|
     t.bigint "user_id"
     t.date "activity_date"
@@ -74,7 +84,6 @@ ActiveRecord::Schema.define(version: 2021_04_28_012441) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.string "mobile"
     t.string "google_uid"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

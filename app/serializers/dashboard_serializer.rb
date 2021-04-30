@@ -1,43 +1,45 @@
 class DashboardSerializer < ActiveModel::Serializer
-  attributes :top_3_contributors, :heros_of_the_last_month, :overall_stats
+  attributes :top_3_rank_contributors, :heroes_of_the_last_month, :overall_stats
 
   # returns contributors for top 3 positions
-  def top_3_contributors
-    top_3 = User.top_contributors.limit(3)
+  def top_3_rank_contributors
+    top_3 = User.top_contributors_by_rank.select { |user| user.rank <= 3 }
+
     top_3.map do |user|
-      badges_count = user.rewards.approved.joins(:category_reason).group("category_reasons.badge").count
       {
         user_id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
         photo_url: user.photo_url,
-        total_count: user.badges_count,
+        badges_sum: user.badges_sum,
+        badges_count: user.badges_count,
+        rank: user.rank,
         badges: {
-          gold: badges_count[CategoryReason.badges[:gold]].to_i,
-          silver: badges_count[CategoryReason.badges[:silver]].to_i,
-          bronze: badges_count[CategoryReason.badges[:bronze]].to_i
+          gold: user.gold.to_i,
+          silver: user.silver.to_i,
+          bronze: user.bronze.to_i
         }
       }
     end
   end
 
   # returns top 5 contributes for last month
-  def heros_of_the_last_month
-    top_5 = User.heros_of_the_last_month.limit(5)
+  def heroes_of_the_last_month
+    top_5 = User.heroes_of_the_last_month.limit(5)
     top_5.map do |user|
-      badges_count = user.rewards.approved.joins(:category_reason).group("category_reasons.badge").count
-      [{
+      {
         user_id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
         photo_url: user.photo_url,
-        total_count: user.badges_count,
+        badges_sum: user.badges_sum,
+        badges_count: user.badges_count,
         badges: {
-          gold: badges_count[CategoryReason.badges[:gold]].to_i,
-            silver: badges_count[CategoryReason.badges[:silver]].to_i,
-            bronze: badges_count[CategoryReason.badges[:bronze]].to_i
+          gold: user.gold.to_i,
+          silver: user.silver.to_i,
+          bronze: user.bronze.to_i
         }
-      }]
+      }
     end
   end
 
