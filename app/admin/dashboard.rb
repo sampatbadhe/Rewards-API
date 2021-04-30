@@ -10,7 +10,7 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel 'Top 5 Heros of last Month' do
+        panel 'Top 5 Heroes of last Month' do
           heros = User.heroes_of_the_last_month.limit(5)
           table_for heros do |user|
             column 'Name', &:full_name
@@ -23,7 +23,7 @@ ActiveAdmin.register_page "Dashboard" do
       end
 
       column do
-        panel 'Overall Top 5 Heros' do
+        panel 'Overall Top 5 Heroes' do
           heros = User.top_contributors_by_rank.limit(5)
           table_for heros do |user|
             column 'Name', &:full_name
