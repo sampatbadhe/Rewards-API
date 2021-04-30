@@ -1,4 +1,6 @@
 ActiveAdmin.register CategoryReason do
+  filter :category, as: :select, collection: Category.all
+
   permit_params :category_id, :reason, :badge
 
   show do
