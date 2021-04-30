@@ -1,24 +1,39 @@
-# README
+# iHero ActiveAdmin and API Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+It provides ActiveAdmin web app and API for iOS iHero(Kiprosh Rewards) app.
 
-Things you may want to cover:
 
-* Ruby version
+# Dependencies
 
-* System dependencies
+### MacOS (Mojave or above)
 
-* Configuration
+| Program Name   | Version Number  | Install / Download                          | Details                       |
+| -------------- | --------------- | --------------------------------------------| ----------------------------- |
+| Ruby           | 2.7.1           |
+| Rails          | 6.1.3           |
+| PostgreSQL     | 11.x.x           | https://www.postgresql.org/download/macosx/ | Database                      |
+| Yarn           | 1.15.2          |
 
-* Database creation
+# Setup application on local
 
-* Database initialization
+1. Install gems
 
-* How to run the test suite
+```
+bundle
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+2. Create the database, load the schema, and initialize it with the seed data.
 
-* Deployment instructions
+```
+rails db:setup
+```
 
-* ...
+3. Start the application
+
+```
+rails s
+```
+
+# Documentation
+
+- API documentation is available online at https://ihero-api.herokuapp.com/api/docs
