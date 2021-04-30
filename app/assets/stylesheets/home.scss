@@ -1,0 +1,26 @@
+// Place all the styles related to the home controller here.
+@import 'bootstrap/dist/css/bootstrap';
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+body{
+  background-image: image-url('homepage_background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.barcode {
+  position:absolute;
+  left: 550px;
+  top: 220px;
+  img{
+    width: 200px;
+    height: auto;
+    opacity: 0.8;
+    top: 200px;
+  }
+}
+
+.heading {
+  text-align: center;
+}
